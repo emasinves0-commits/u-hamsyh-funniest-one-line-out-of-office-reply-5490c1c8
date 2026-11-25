@@ -6,9 +6,18 @@ const ENTRY =
 const MIN_CHARS = 1;
 const MAX_CHARS = 160;
 const OUTPUT_DIR = "/output";
-const OUTPUT_FILE = `${OUTPUT_DIR}/entry.txt`;
+const OUTPUT_FILENAME = "entry.txt";
+const OUTPUT_FILE = `${OUTPUT_DIR}/${OUTPUT_FILENAME}`;
 
 const charCount = (s: string): number => [...s].length;
+
+// Gate rules (checked before anything is written):
+//   1. Length is MIN_CHARS to MAX_CHARS characters (code points, not bytes).
+//   2. Exactly one line: no CR or LF anywhere in the text.
+//   3. Not only whitespace.
+//   4. No leading or trailing whitespace, and no control characters.
+// The file is written without a trailing newline, then read back and
+// required to be byte-identical to the entry.
 
 if (charCount(ENTRY) < MIN_CHARS || charCount(ENTRY) > MAX_CHARS) {
   throw new Error(`entry must be ${MIN_CHARS} to ${MAX_CHARS} characters`);
